@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-infinite-virtual-scroll": [
+        "dist/ngx-infinite-virtual-scroll"
+      ],
+      "ngx-infinite-virtual-scroll/*": [
+        "dist/ngx-infinite-virtual-scroll/*"
+      ]
+    }
   }
 }

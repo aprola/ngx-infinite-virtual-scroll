@@ -1,0 +1,19 @@
+{
+  "name": "ngx-infinite-virtual-scroll",
+  "version": "1.0.0",
+  "description": "Software Development Kit for Angular",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/cdk-experimental": "^6.0.0",
+    "@angular/cdk": "^6.0.0",
+    "rxjs": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aprola/ngx-infinite-virtual-scroll.git"
+  },
+  "author": "G Shireesh Kumar",
+  "license": "MIT",
+  "homepage": "https://github.com/aprola/ngx-infinite-virtual-scroll"
+}

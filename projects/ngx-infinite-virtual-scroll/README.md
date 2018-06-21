@@ -1,8 +1,11 @@
 # ngx-infinite-virtual-scroll
-
 ---
-
 :rocket: Native angular 6+ infinite virtual scroll component
+
+"@angular/cdk-experimental": "^6.0.0",\
+"@angular/cdk": "^6.0.0",  
+
+
 
 ## Configuration
 
