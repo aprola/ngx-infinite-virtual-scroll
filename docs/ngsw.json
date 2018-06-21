@@ -1,18 +1,18 @@
 {
   "configVersion": 1,
-  "index": "/index.html",
+  "index": "ngx-infinite-virtual-scroll/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/favicon.ico",
-        "/index.html",
-        "/main.ebfd432807ba3d222c0f.js",
-        "/polyfills.2f4a59095805af02bd79.js",
-        "/runtime.a66f828dca56eeb90e02.js",
-        "/styles.81ffe8ac61fd24c441be.css"
+        "ngx-infinite-virtual-scroll/favicon.ico",
+        "ngx-infinite-virtual-scroll/index.html",
+        "ngx-infinite-virtual-scroll/main.ebfd432807ba3d222c0f.js",
+        "ngx-infinite-virtual-scroll/polyfills.2f4a59095805af02bd79.js",
+        "ngx-infinite-virtual-scroll/runtime.a66f828dca56eeb90e02.js",
+        "ngx-infinite-virtual-scroll/styles.81ffe8ac61fd24c441be.css"
       ],
       "patterns": []
     },
@@ -21,34 +21,34 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "urls": [
-        "/assets/icons/icon-128x128.png",
-        "/assets/icons/icon-144x144.png",
-        "/assets/icons/icon-152x152.png",
-        "/assets/icons/icon-192x192.png",
-        "/assets/icons/icon-384x384.png",
-        "/assets/icons/icon-512x512.png",
-        "/assets/icons/icon-72x72.png",
-        "/assets/icons/icon-96x96.png"
+        "ngx-infinite-virtual-scroll/assets/icons/icon-128x128.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-144x144.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-152x152.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-192x192.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-384x384.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-512x512.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-72x72.png",
+        "ngx-infinite-virtual-scroll/assets/icons/icon-96x96.png"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
-    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
-    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
-    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
-    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
-    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
-    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
-    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
-    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "63705ae77e16cd7e48b3c49de6edfb7473ddc0a4",
-    "/main.ebfd432807ba3d222c0f.js": "7e02116e193eac2bc3b8f8606370bba678db3667",
-    "/polyfills.2f4a59095805af02bd79.js": "8949bb1b1e302dda246f6ed9c2da703270360b1f",
-    "/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
-    "/styles.81ffe8ac61fd24c441be.css": "f510cda71b5fd1eab0cd956f4d169e9608b70c5f"
+    "ngx-infinite-virtual-scroll/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "ngx-infinite-virtual-scroll/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "ngx-infinite-virtual-scroll/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "ngx-infinite-virtual-scroll/index.html": "662e3e2d0869754297df1c601d4dd78bb10b8ea5",
+    "ngx-infinite-virtual-scroll/main.ebfd432807ba3d222c0f.js": "7e02116e193eac2bc3b8f8606370bba678db3667",
+    "ngx-infinite-virtual-scroll/polyfills.2f4a59095805af02bd79.js": "8949bb1b1e302dda246f6ed9c2da703270360b1f",
+    "ngx-infinite-virtual-scroll/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
+    "ngx-infinite-virtual-scroll/styles.81ffe8ac61fd24c441be.css": "f510cda71b5fd1eab0cd956f4d169e9608b70c5f"
   },
   "navigationUrls": [
     {

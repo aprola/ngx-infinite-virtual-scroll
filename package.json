@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "gh-pages": "ng build --prod --output-path ./docs",
+    "gh-pages": "ng build --prod --output-path ./docs --base-href ngx-infinite-virtual-scroll",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
