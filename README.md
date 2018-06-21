@@ -4,6 +4,10 @@
 
 :rocket: Native angular 6+ infinite virtual scroll component
 
+## Installation
+npm install --save ngx-infinite-virtual-scroll
+
+
 ## Configuration
 
 ### Main application module
