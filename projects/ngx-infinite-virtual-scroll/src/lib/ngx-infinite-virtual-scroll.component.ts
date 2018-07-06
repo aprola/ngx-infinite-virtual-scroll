@@ -130,11 +130,14 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       this.scrollTop = scrollTop;
       this.cdRef.detectChanges();
       const stickOffset = this.scrollHeight - this.containerHeight;
-      this.progress = clamp(0, 1, (stickOffset - this.scrollTop ) / stickOffset);
+      this.progress = clamp(0, 1, (stickOffset - this.scrollTop) / stickOffset);
       if (this.progress * 10 < this.infiniteScrollDistance) {
         scrollEnd$.next();
       }
-      this._viewportRef.setScrollOffset(this.scrollTop || 1);
+      if (this.scrollOffset < 1) {
+        this._viewportRef.setScrollOffset(this.scrollTop || 1);
+      }
+
     });
   }
 
@@ -148,6 +151,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
   detachFromTop() {
     this.fixedToTop = false;
     this.render.removeClass(this._scrollContainerRef.nativeElement, 'fixed-scroll-container');
+    this._viewportRef.setScrollOffset(0);
   }
 
   ngOnDestroy() {
