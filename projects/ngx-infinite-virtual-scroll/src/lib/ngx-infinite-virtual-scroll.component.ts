@@ -61,17 +61,13 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
     if (this.listData) {
       this.dataLength = this.listData.length;
     }
-    setTimeout(() => {this.scrollCheck$.next(); }, 500);
+    setTimeout(() => {this.scrollCheck$.next(); }, 100);
   }
 
   constructor(private _elem: ElementRef, private _zone: NgZone,
-              private cdRef: ChangeDetectorRef, private render: Renderer2) {
-    // console.log(_elem);
-  }
+              private cdRef: ChangeDetectorRef, private render: Renderer2) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     const scrollEnd$ = new Subject<void>();
@@ -81,7 +77,6 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       this.scrollEnd.emit('');
     });
     if (!this.appendToBody) {
-      console.log(this._viewportRef);
       this._viewportRef.renderedRangeStream.pipe(
         takeWhile(() => this.alive)
       ).subscribe((val) => {
@@ -96,11 +91,11 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
     this.offsetTop = this._elem.nativeElement.offsetTop;
     this.cdRef.detectChanges();
     this.elemBounds = this._elem.nativeElement.getBoundingClientRect();
-    // console.log(this._viewportRef, this.scrollHeight);
 
-    // merge(fromEvent(document, 'resize'), this._viewportRef.
-
-    fromEvent(window, 'resize').pipe(takeWhile(() => this.alive)).subscribe(val => {
+    combineLatest(fromEvent(window, 'resize'), this.scrollCheck$).pipe(
+      debounceTime(this.debounceTime, animationFrame),
+      takeWhile(() => this.alive)
+    ).subscribe(val => {
       this.elemBounds = this._elem.nativeElement.getBoundingClientRect();
       this.render.setStyle(this._scrollContainerRef.nativeElement, 'left', this.elemBounds.left + 'px');
       this.render.setStyle(this._scrollContainerRef.nativeElement, 'width', this.elemBounds.width + 'px');
@@ -124,6 +119,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       this.scrollHeight = this._viewportRef._totalContentSize;
       this.containerHeight = this._viewportRef.elementRef.nativeElement.clientHeight;
       if (this.fixedToTop) {
+        /*on overflow reached end.*/
         this.scrollOffset = clamp(0, this.containerHeight, this.containerHeight + scrollTop - this.scrollHeight);
         this.render.setStyle(this._scrollContainerRef.nativeElement, 'transform', 'translateY(-' + this.scrollOffset + 'px)');
       }
@@ -136,6 +132,8 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       }
       if (this.scrollOffset < 1) {
         this._viewportRef.setScrollOffset(this.scrollTop || 1);
+      } else {
+        this._viewportRef.setScrollOffset(this.scrollHeight);
       }
 
     });

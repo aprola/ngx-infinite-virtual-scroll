@@ -68,3 +68,9 @@ Contributions are always welcome, just make sure that ...
 ## License
 
 Licensed under [MIT](https://opensource.org/licenses/MIT).
+
+
+CHANGELOG:
+
+  1.0.3:
+  * on reaching end, fixing content offset to max. to create consistency

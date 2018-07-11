@@ -8,9 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   increasingSizeData = Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20);
   increasingSizeData2 = Array(200).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20);
+  iv = 0;
   loadMore() {
     console.log('more');
-    this.increasingSizeData = this.increasingSizeData.concat(Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20));
+    this.iv += 100;
+    if (this.iv > 400) return;
+    // this.increasingSizeData = this.increasingSizeData.concat(Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20));
   }
   loadMore2() {
     console.log('more');

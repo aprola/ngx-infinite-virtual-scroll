@@ -1,6 +1,6 @@
 {
   "name": "ngx-infinite-virtual-scroll",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Infinite virtual scroll using cdk",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
