@@ -9,7 +9,7 @@
       "urls": [
         "ngx-infinite-virtual-scroll/favicon.ico",
         "ngx-infinite-virtual-scroll/index.html",
-        "ngx-infinite-virtual-scroll/main.84883550d38d6f2ae610.js",
+        "ngx-infinite-virtual-scroll/main.fc1e177ea4bf474c3658.js",
         "ngx-infinite-virtual-scroll/polyfills.2f4a59095805af02bd79.js",
         "ngx-infinite-virtual-scroll/runtime.a66f828dca56eeb90e02.js",
         "ngx-infinite-virtual-scroll/styles.81ffe8ac61fd24c441be.css"
@@ -44,8 +44,8 @@
     "ngx-infinite-virtual-scroll/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "ngx-infinite-virtual-scroll/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "ngx-infinite-virtual-scroll/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "ngx-infinite-virtual-scroll/index.html": "d8d16fdd10a16bba62075712a092739f8f1dfc7d",
-    "ngx-infinite-virtual-scroll/main.84883550d38d6f2ae610.js": "b789e275979594e3be965a107a8f78b2b3539a80",
+    "ngx-infinite-virtual-scroll/index.html": "93a8fe097878b95c4e7a7b4480b37052d4fd4ad9",
+    "ngx-infinite-virtual-scroll/main.fc1e177ea4bf474c3658.js": "13db1e583210222df2647606bf76d4477a965ff0",
     "ngx-infinite-virtual-scroll/polyfills.2f4a59095805af02bd79.js": "8949bb1b1e302dda246f6ed9c2da703270360b1f",
     "ngx-infinite-virtual-scroll/runtime.a66f828dca56eeb90e02.js": "078e320cc6fdaf355836c3b1c52b059cdd33fc7e",
     "ngx-infinite-virtual-scroll/styles.81ffe8ac61fd24c441be.css": "f510cda71b5fd1eab0cd956f4d169e9608b70c5f"

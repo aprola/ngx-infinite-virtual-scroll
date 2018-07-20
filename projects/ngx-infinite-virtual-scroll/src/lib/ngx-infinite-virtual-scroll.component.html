@@ -9,5 +9,5 @@
       </div>
     </cdk-virtual-scroll-viewport>
   </div>
-  <div class="iv-list-spacer"  *ngIf="appendToBody" [style.height.px]="scrollHeight"></div>
+  <div class="iv-list-spacer"  #spacer *ngIf="appendToBody" [style.height.px]="scrollHeight">&nbsp;</div>
 </div>

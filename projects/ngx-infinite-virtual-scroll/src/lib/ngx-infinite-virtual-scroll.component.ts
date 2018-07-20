@@ -44,6 +44,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
   progress: number;
   dataLength: number;
   private alive = true;
+  @ViewChild('spacer') public _spacerRef: ElementRef;
   @ViewChild('scrollContainer') public _scrollContainerRef: ElementRef;
   @ContentChild(NgxIvItemTemplateDirective) public _templateRef: {template: TemplateRef<any>};
   @ContentChild(NgxIvLoadingTemplateDirective) public _loadingRef: {template: TemplateRef<any>};
@@ -96,7 +97,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       debounceTime(this.debounceTime, animationFrame),
       takeWhile(() => this.alive)
     ).subscribe(val => {
-      this.elemBounds = this._elem.nativeElement.getBoundingClientRect();
+      this.elemBounds = this._spacerRef.nativeElement.getBoundingClientRect();
       this.render.setStyle(this._scrollContainerRef.nativeElement, 'left', this.elemBounds.left + 'px');
       this.render.setStyle(this._scrollContainerRef.nativeElement, 'width', this.elemBounds.width + 'px');
     });
