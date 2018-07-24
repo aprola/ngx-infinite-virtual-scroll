@@ -16,8 +16,8 @@ import {
 } from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk-experimental';
 import {animationFrame} from 'rxjs/internal/scheduler/animationFrame';
-import {combineLatest, fromEvent, Subject} from 'rxjs/index';
-import {debounceTime, takeWhile} from 'rxjs/operators';
+import {combineLatest, fromEvent, interval, Subject} from 'rxjs/index';
+import {debounceTime, take, takeLast, takeWhile} from 'rxjs/operators';
 import {NgxIvItemTemplateDirective, NgxIvLoadingTemplateDirective} from './ng-template.directive';
 
 const clamp = (min: number, max: number, value: number) => Math.min(max, Math.max(min, value));
@@ -36,7 +36,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
   scrollHeight = 0;
   containerHeight = 0;
   scrollTop = 0;
-  scrollOffset: number;
+  scrollBottomOffset: number;
   listData: any[];
   elemBounds: any;
   offsetTop: any;
@@ -62,7 +62,8 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
     if (this.listData) {
       this.dataLength = this.listData.length;
     }
-    setTimeout(() => {this.scrollCheck$.next(); }, 100);
+    interval(500).pipe(take(4)).subscribe(() => this.scrollCheck$.next());
+    this._viewportRef.checkViewportSize();
   }
 
   constructor(private _elem: ElementRef, private _zone: NgZone,
@@ -89,18 +90,10 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       return;
     }
     // this.render.setStyle(this._elem.nativeElement, 'height', 'initial');
-    this.offsetTop = this._elem.nativeElement.offsetTop;
+    // this.offsetTop = this._elem.nativeElement.offsetTop;
     this.cdRef.detectChanges();
     this.elemBounds = this._elem.nativeElement.getBoundingClientRect();
-
-    combineLatest(fromEvent(window, 'resize'), this.scrollCheck$).pipe(
-      debounceTime(this.debounceTime, animationFrame),
-      takeWhile(() => this.alive)
-    ).subscribe(val => {
-      this.elemBounds = this._spacerRef.nativeElement.getBoundingClientRect();
-      this.render.setStyle(this._scrollContainerRef.nativeElement, 'left', this.elemBounds.left + 'px');
-      this.render.setStyle(this._scrollContainerRef.nativeElement, 'width', this.elemBounds.width + 'px');
-    });
+    this.offsetTop = this.elemBounds.y + window.pageYOffset;
 
     const scroll$ = new Subject<void>();
     this._zone.runOutsideAngular(() => {
@@ -111,27 +104,43 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
         this._zone.run(() => scroll$.next());
       });
     });
+
+
+    combineLatest(fromEvent(window, 'resize'), this.scrollCheck$, interval(2000).pipe(take(3))).pipe(
+      debounceTime(this.debounceTime, animationFrame),
+      takeWhile(() => this.alive)
+    ).subscribe(val => {
+      this.elemBounds = this._spacerRef.nativeElement.getBoundingClientRect();
+      this.render.setStyle(this._scrollContainerRef.nativeElement, 'left', this.elemBounds.left + 'px');
+      this.render.setStyle(this._scrollContainerRef.nativeElement, 'width', this.elemBounds.width + 'px');
+    });
+
     combineLatest(scroll$, this.scrollCheck$).pipe(takeWhile(() => this.alive)).subscribe(val => {
       // const scrollTop = document.documentElement.scrollTop;
-      const scrollTop = Math.max(0, document.documentElement.scrollTop - this.offsetTop);
+      const scrollTop = Math.max(0, window.pageYOffset - this.offsetTop);
 
       if (scrollTop && !this.fixedToTop) { this.attachToTop(); }
       if (!scrollTop && this.fixedToTop) { this.detachFromTop(); }
-      this.scrollHeight = this._viewportRef._totalContentSize;
+      const vrange: any = this._viewportRef.getRenderedRange();
+      if (vrange.end !== this.dataLength) {
+        this.scrollHeight = this._viewportRef._totalContentSize;
+      }
       this.containerHeight = this._viewportRef.elementRef.nativeElement.clientHeight;
       if (this.fixedToTop) {
         /*on overflow reached end.*/
-        this.scrollOffset = clamp(0, this.containerHeight, this.containerHeight + scrollTop - this.scrollHeight);
-        this.render.setStyle(this._scrollContainerRef.nativeElement, 'transform', 'translateY(-' + this.scrollOffset + 'px)');
+        this.scrollBottomOffset = clamp(0, this.containerHeight, this.containerHeight + scrollTop - this.scrollHeight);
+        this.render.setStyle(this._scrollContainerRef.nativeElement, 'transform', 'translateY(-' + this.scrollBottomOffset + 'px)');
       }
       this.scrollTop = scrollTop;
       this.cdRef.detectChanges();
       const stickOffset = this.scrollHeight - this.containerHeight;
-      this.progress = clamp(0, 1, (stickOffset - this.scrollTop) / stickOffset);
+      this.progress = clamp(0, 1, (stickOffset - scrollTop) / stickOffset);
       if (this.progress * 10 < this.infiniteScrollDistance) {
         scrollEnd$.next();
       }
-      if (this.scrollOffset < 1) {
+      if (!this.fixedToTop) {
+        this._viewportRef.setScrollOffset(0);
+      } else if (this.progress < 1) {
         this._viewportRef.setScrollOffset(this.scrollTop || 1);
       } else {
         this._viewportRef.setScrollOffset(this.scrollHeight);

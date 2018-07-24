@@ -3,9 +3,6 @@
     <cdk-virtual-scroll-viewport class="demo-viewport" autosize [class.append-to-body]="appendToBody">
       <div *cdkVirtualFor="let item of listData; let i = index" >
         <ng-template [ngTemplateOutlet]="_templateRef.template" [ngTemplateOutletContext]="{ $implicit: item, index: i }" [ngIf]="item"></ng-template>
-        <div *ngIf="!item">
-          test
-        </div>
       </div>
     </cdk-virtual-scroll-viewport>
   </div>

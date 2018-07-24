@@ -5,7 +5,7 @@
 <div class="test2">
   <ngx-infinite-virtual-scroll [ListData]="increasingSizeData2" (scrollEnd)="loadMore2()">
     <ng-template ivs-item-tmp let-item let-i="index">
-      <div style="height: 50px;">
+      <div [style.height.px]="(i%10)*20">
         Item #{{i}} - ({{item}}px)
       </div>
     </ng-template>
@@ -15,7 +15,7 @@
 <div class="test1">
   <ngx-infinite-virtual-scroll [ListData]="increasingSizeData" [appendToBody]="true" (scrollEnd)="loadMore()">
     <ng-template ivs-item-tmp let-item let-i="index">
-      <div style="height: 50px;">
+      <div [style.height.px]="(i%10)*20">
         Item #{{i}} - ({{item}}px)
       </div>
     </ng-template>
@@ -29,3 +29,4 @@
   <br/>
   <br/>
 </div>
+
