@@ -14,11 +14,11 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import {CdkVirtualScrollViewport} from '@angular/cdk-experimental';
 import {animationFrame} from 'rxjs/internal/scheduler/animationFrame';
-import {combineLatest, fromEvent, interval, Subject} from 'rxjs/index';
-import {debounceTime, take, takeLast, takeWhile} from 'rxjs/operators';
+import {combineLatest, fromEvent, Subject} from 'rxjs';
+import {debounceTime, takeWhile} from 'rxjs/operators';
 import {NgxIvItemTemplateDirective, NgxIvLoadingTemplateDirective} from './ng-template.directive';
+import {CdkVirtualScrollViewport} from '@angular/cdk-experimental/scrolling';
 
 const clamp = (min: number, max: number, value: number) => Math.min(max, Math.max(min, value));
 export interface IvListOptions {width: number; widthInPercentage?: boolean; }
@@ -36,7 +36,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
   scrollHeight = 0;
   containerHeight = 0;
   scrollTop = 0;
-  scrollBottomOffset: number;
+  scrollOffset: number;
   listData: any[];
   elemBounds: any;
   offsetTop: any;
@@ -50,8 +50,9 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
   @ContentChild(NgxIvLoadingTemplateDirective) public _loadingRef: {template: TemplateRef<any>};
   @ViewChild(CdkVirtualScrollViewport) public _viewportRef: CdkVirtualScrollViewport;
   @Output() scrollEnd =  new EventEmitter();
-  scrollCheck$ = new Subject<void>();
+  @Input() scrollCheck$ = new Subject<void>();
   _options: IvListOptions;
+  private fixedToBottom: boolean;
   @Input()
   set options(val: IvListOptions) {
     this._options = val;
@@ -62,8 +63,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
     if (this.listData) {
       this.dataLength = this.listData.length;
     }
-    interval(500).pipe(take(4)).subscribe(() => this.scrollCheck$.next());
-    this._viewportRef.checkViewportSize();
+    setTimeout(() => {this.scrollCheck$.next(); }, 1000);
   }
 
   constructor(private _elem: ElementRef, private _zone: NgZone,
@@ -106,7 +106,7 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
     });
 
 
-    combineLatest(fromEvent(window, 'resize'), this.scrollCheck$, interval(2000).pipe(take(3))).pipe(
+    combineLatest(fromEvent(window, 'resize'), this.scrollCheck$, scroll$.pipe(debounceTime(2000))).pipe(
       debounceTime(this.debounceTime, animationFrame),
       takeWhile(() => this.alive)
     ).subscribe(val => {
@@ -121,16 +121,13 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
 
       if (scrollTop && !this.fixedToTop) { this.attachToTop(); }
       if (!scrollTop && this.fixedToTop) { this.detachFromTop(); }
-      const vrange: any = this._viewportRef.getRenderedRange();
-      if (vrange.end !== this.dataLength) {
-        this.scrollHeight = this._viewportRef._totalContentSize;
-      }
+      this.scrollHeight = this._viewportRef._totalContentSize;
       this.containerHeight = this._viewportRef.elementRef.nativeElement.clientHeight;
-      if (this.fixedToTop) {
-        /*on overflow reached end.*/
-        this.scrollBottomOffset = clamp(0, this.containerHeight, this.containerHeight + scrollTop - this.scrollHeight);
-        this.render.setStyle(this._scrollContainerRef.nativeElement, 'transform', 'translateY(-' + this.scrollBottomOffset + 'px)');
-      }
+      // if (this.fixedToTop) {
+      //   /*on overflow reached end.*/
+      //   this.scrollOffset = clamp(0, this.scrollHeight - this.containerHeight, scrollTop);
+      //   this.render.setStyle(this._scrollContainerRef.nativeElement, 'transform', 'translateY(-' + this.scrollOffset + 'px)');
+      // }
       this.scrollTop = scrollTop;
       this.cdRef.detectChanges();
       const stickOffset = this.scrollHeight - this.containerHeight;
@@ -138,17 +135,30 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
       if (this.progress * 10 < this.infiniteScrollDistance) {
         scrollEnd$.next();
       }
+      let setScrollTo = 0;
       if (!this.fixedToTop) {
-        this._viewportRef.setScrollOffset(0);
-      } else if (this.progress < 1) {
-        this._viewportRef.setScrollOffset(this.scrollTop || 1);
+        setScrollTo = 0;
+      } else if (this.progress > 0) {
+        setScrollTo = this.scrollTop;
+        if (this.fixedToBottom) { this.detachFromBottom(); }
       } else {
-        this._viewportRef.setScrollOffset(this.scrollHeight);
+        setScrollTo = this.scrollHeight;
+        if (!this.fixedToBottom) { this.attachToBottom(); }
       }
-
+      this._viewportRef.setScrollOffset(clamp(0, this.scrollHeight - this.containerHeight, setScrollTo));
     });
   }
-
+  attachToBottom() {
+    this.fixedToBottom = true;
+    this.render.removeClass(this._scrollContainerRef.nativeElement, 'fixed-scroll-container');
+    this.render.setStyle(this._scrollContainerRef.nativeElement
+      , 'transform', 'translateY(' + (this.scrollHeight - this.containerHeight) + 'px)');
+  }
+  detachFromBottom() {
+    this.fixedToBottom = false;
+    this.render.addClass(this._scrollContainerRef.nativeElement, 'fixed-scroll-container');
+    this.render.setStyle(this._scrollContainerRef.nativeElement, 'transform', 'translateY(0)');
+  }
   attachToTop() {
     this.fixedToTop = true;
     this.render.addClass(this._scrollContainerRef.nativeElement, 'fixed-scroll-container');
@@ -162,6 +172,9 @@ export class NgxInfiniteVirtualScrollComponent implements OnInit, AfterViewInit,
     this._viewportRef.setScrollOffset(0);
   }
 
+  resize() {
+    this.scrollCheck$.next();
+  }
   ngOnDestroy() {
     this.alive = false;
   }

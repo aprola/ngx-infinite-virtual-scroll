@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   increasingSizeData = Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20);
-  increasingSizeData2 = Array(200).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20);
+  increasingSizeData2 = Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20);
   iv = 0;
   loadMore() {
     console.log('more');
@@ -17,6 +17,6 @@ export class AppComponent {
   }
   loadMore2() {
     console.log('more');
-    this.increasingSizeData2 = this.increasingSizeData2.concat(Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20));
+    // this.increasingSizeData2 = this.increasingSizeData2.concat(Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20));
   }
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NgxInfiniteVirtualScrollComponent } from './ngx-infinite-virtual-scroll.component';
 import {NgxIvItemTemplateDirective, NgxIvLoadingTemplateDirective} from './ng-template.directive';
 import {CommonModule} from '@angular/common';
-import {ScrollingModule} from '@angular/cdk-experimental';
+import {ScrollingModule} from '@angular/cdk-experimental/scrolling';
 
 @NgModule({
   imports: [

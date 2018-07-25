@@ -7,6 +7,11 @@
     width: 100%;
     display: block;
     position: relative;
+    overflow: hidden;
+  }
+  .scroll-container:not(.fixed-scroll-container) {
+    position: absolute;
+    left: 0!important;
   }
   .demo-viewport.append-to-body {
     height: 100vh!important;
