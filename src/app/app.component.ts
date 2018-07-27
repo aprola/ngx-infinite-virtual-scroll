@@ -17,6 +17,6 @@ export class AppComponent {
   }
   loadMore2() {
     console.log('more');
-    // this.increasingSizeData2 = this.increasingSizeData2.concat(Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20));
+    this.increasingSizeData2 = this.increasingSizeData2.concat(Array(100).fill(0).map((_, i) => (1 + Math.floor(i / 1000)) * 20));
   }
 }

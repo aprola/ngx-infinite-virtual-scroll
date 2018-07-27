@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 - no unreleased changes.
 
+## [1.0.12] - 2018-07-27
+### Fixed
+- npm issues, invalidated all changes and added bumped version.
+
 ## [1.0.10/11] - 2018-07-26
 ### Fixed
 - checking end of line. so that spacer height is less. also resize for sometimes.

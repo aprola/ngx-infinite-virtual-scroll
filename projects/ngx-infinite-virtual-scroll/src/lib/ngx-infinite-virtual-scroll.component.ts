@@ -14,11 +14,11 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import {animationFrame} from 'rxjs/internal/scheduler/animationFrame';
 import {combineLatest, fromEvent, Subject} from 'rxjs';
-import {debounceTime, takeWhile} from 'rxjs/operators';
+import {debounceTime, takeWhile} from 'rxjs/internal/operators';
 import {NgxIvItemTemplateDirective, NgxIvLoadingTemplateDirective} from './ng-template.directive';
 import {CdkVirtualScrollViewport} from '@angular/cdk-experimental/scrolling';
+import {animationFrame} from 'rxjs/internal/scheduler/animationFrame';
 
 const clamp = (min: number, max: number, value: number) => Math.min(max, Math.max(min, value));
 export interface IvListOptions {width: number; widthInPercentage?: boolean; }
